@@ -12,6 +12,13 @@ This repo (and its source) ie. project should present my simple and basic soluti
 
 When designing any software solution the author(s) should take system constraints in consideration. Constraints such as disk memory size, RPS (requests per second), rate limiting, security, scalability etc. This section lays out some of them so the system does not get overengineered but can evolve if required later.
 
+- URL links can hold one or more of the 128 chars of the ASCII charset and can be treated as varchar data of `1 byte` per char in a DB system
+- number of links per day: `100.000`
+- links generated per sec: `100.000 / 24 / (60*60) = 1,2 RPS`
+- lets assume read is 10x ratio of write: `12 RPS`
+- assuming the service will run `5 years` then the total number of links generated is `100.000 * 365 * 5 = 182,5 mil`
+- average [URL is 66 characters](https://backlinko.com/search-engine-ranking) and assuming a char takes a byte the total storage in `5 years` would be `66 bytes * 182,5 mil links = 1.1 TB` of storage at least just for long URL datapoint, also we need to track ID and shortURL at most so lets make it `100 bytes` which now totals with more actual `1.7 TB` requirement
+
 ## How to build, run and test?
 
 ### Pre-reqs
@@ -31,7 +38,7 @@ To run the application from root dir `$ dotnet run /src/UrlShortner.HttpApi` - s
 To run the app via Docker you can build the image yourself or just pull it from the hub.
 
 ```bash
-> TODO DOCKER how to...
+> TODO DOCKER how to... I gotta make the dockerfile and push the image to hub.docker.com first
 ```
 
 #### Test
@@ -43,7 +50,28 @@ To run tests from root dir `$ dotnet test` - finds the test projects and execute
 The applications offers two simple features:
 
 1. Create a shortened URL via POST REST API endpoint which accepts and serves a JSON payload.
+
+    Sample scenario
+
+    ```bash
+    > curl localhost:4000 -XPOST -d '{ "url": "http://www.somelongurl.com?abc=xyz" }'
+
+    > { "short_url": "/abc123", "url": "http://www.somelongurl.com?abc=xyz" }
+    ```
+
 2. Load the shortened URL to get a HTTP 301 redirection response to the original long URL with a JSON payload of it included.
+
+    Sample scenario
+
+    ```bash
+    curl -v localhost:4000/abc123
+    ...
+    < HTTP/1.1 301 Moved Permanently
+    ...
+    < Location: http://www.somelongurl.com?abc=xyz
+    ...
+    { "url": "http://www.somelongurl.com?abc=xyz" }
+    ```
 
 ## The "smart stuff" - the problem
 
@@ -58,4 +86,4 @@ At the initial moment of writing this I am not sure which one should I go for, I
 
 ## Author and credits
 
-Vedran Mandić (trying to be smart).
+Vedran Mandić.
