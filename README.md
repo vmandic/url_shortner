@@ -89,12 +89,6 @@ This system is interesting to observe from an algorithmic perspective ie. how wo
 
 At the initial moment of writing this I am not sure which one should I go for, I guess the faster to implement one, eg. a CRC32 hashing function with a check for collision in the backing store. This one would suffer on the longer run from the size of the string (ie. it matters on the long run how long the string value is).
 
-## TODO list of stuff I need to cover here
-
-- [x] make sure this file is done
-
-- [x] write actual code, tests, dockerize
-
 ## Author and credits
 
 Vedran Mandić.
