@@ -1,10 +1,10 @@
 # UrlShortner - a fun code challenge
 
-This repo demonstrates my (hi I'm Vedran!) attempt at solving a coding challenge of building an simple URL shortner web service.
+This repo demonstrates my (hi I'm Vedran!) attempt at solving a coding challenge of building a simple URL shortner web service.
 
 ## OK, what is this really?
 
-This is a coding challenge where the task is to build a simple HTTP REST API service which can do URL shortening. URL shortening is a process where a user provides a long HTTP URL (link to a web site) which is then replaced ie. shortend by a shorter variant. One could describe this service as smarter `Dictionary<string, string>` as a service where the key is the long original URL and shorter URL the pairing value.
+This is a coding challenge where the task is to build a simple HTTP REST API service which can do URL shortening. URL shortening is a process where a user provides a long HTTP URL (link to a web site) which is then replaced ie. shortend by a shorter variant. One could describe this service as smarter `Dictionary<string, string>` as a service where the key is the long original URL and shorter URL the pairing value or vice versa.
 
 This repo (and its source) ie. project should present my simple and basic solution to the proposed problem.
 
