@@ -53,6 +53,13 @@ To run the image as container on your machine on port 4000:
 > docker run -d -p 4000:80 --name app1 urlshortnerhttpapi:latest
 ```
 
+To pull the image use the command:
+
+```bash
+> docker pull vmandic/url_shortner:latest
+```
+
+
 #### Test
 
 To run tests from root dir `$ dotnet test` - finds the test projects and executes them, more precisely should start a temp localhost server (`TestServer` does "the magic") aginst which some integration sanity tests are ran.
