@@ -73,7 +73,7 @@ The applications offers two simple features:
     Sample scenario
 
     ```bash
-    > curl localhost:4000 -XPOST -d '{ "url": "http://www.somelongurl.com?abc=xyz" } -H 'Content-Type: application/json'
+    > curl localhost:4000 -X POST -d '{ "url": "http://www.somelongurl.com?abc=xyz" } -H 'Content-Type: application/json'
 
     > { "short_url": "/abc123", "url": "http://www.somelongurl.com?abc=xyz" }
     ```
