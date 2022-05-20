@@ -1,5 +1,7 @@
 ![build & test](https://github.com/vmandic/url_shortner/actions/workflows/dotnet.yml/badge.svg)
 
+Hosted temporarily on [Azure Container Instance (Swagger UI) here](http://20.73.140.47/swagger/index.html).
+
 # UrlShortner - a fun code challenge
 
 This repo demonstrates my (hi I'm Vedran!) attempt at solving a coding challenge of building a simple URL shortner web service.
