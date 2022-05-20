@@ -19,13 +19,17 @@ When designing any software solution the author(s) should take system constraint
 - assuming the service will run `5 years` then the total number of links generated is `100.000 * 365 * 5 = 182,5 mil`
 - average [URL is 66 characters](https://backlinko.com/search-engine-ranking) and assuming a char takes a byte the total storage in `5 years` would be `66 bytes * 182,5 mil links = 1.1 TB` of storage at least just for long URL datapoint, also we need to track ID and shortURL at most so lets make it `100 bytes` which now totals with more actual `1.7 TB` requirement
 
+## Approach
+
+- I'm using CRC32 that produces 8 chars fixed len hash for short URLs
+
 ## How to build, run and test?
 
 ### Pre-reqs
 
 You can build the source on your machine if you have the matching `global.json`.NET SDK installed. You can find the required one on the [official download Microsoft site](https://dotnet.microsoft.com/en-us/download). If you have not tried .NET and C# by now, OK, well you really should. Why? Because .NET is awesome, fast, easy to learn, maintainable, ever-evolving, with a lovey bunch of folks behind it, such a great community... and yes it is cross-plat, and also blazing fast for your k8s cluster and any linux server.
 
-### Build, run & test (Linux shell)
+### Build, run & test (Linux)
 
 #### Build
 
@@ -35,10 +39,16 @@ To build the source run from root dir `$ dotnet build` - triggers Visual Studio 
 
 To run the application from root dir `$ dotnet run /src/UrlShortner.HttpApi` - start the localhost server and off you are creating and sharing shorter URLs.
 
-To run the app via Docker you can build the image yourself or just pull it from the hub.
+To run the app via Docker you can build the image yourself or just pull it from a repo, here is how to build one from project root:
 
 ```bash
-> TODO DOCKER how to... I gotta make the dockerfile and push the image to hub.docker.com first
+> docker build -f ./src/UrlShortner.HttpApi/Dockerfile --force-rm -t urlshortnerhttpapi:latest .
+```
+
+To run the image as container on your machine on port 4000:
+
+```bash
+> docker run -d -p 4000:80 --name app1 urlshortnerhttpapi:latest
 ```
 
 #### Test
@@ -54,7 +64,7 @@ The applications offers two simple features:
     Sample scenario
 
     ```bash
-    > curl localhost:4000 -XPOST -d '{ "url": "http://www.somelongurl.com?abc=xyz" }'
+    > curl localhost:4000 -XPOST -d '{ "url": "http://www.somelongurl.com?abc=xyz" } -H 'Content-Type: application/json'
 
     > { "short_url": "/abc123", "url": "http://www.somelongurl.com?abc=xyz" }
     ```
@@ -81,8 +91,9 @@ At the initial moment of writing this I am not sure which one should I go for, I
 
 ## TODO list of stuff I need to cover here
 
-- [ ] make sure this file is done
-- [ ] write actual code, tests, dockerize
+- [x] make sure this file is done
+
+- [x] write actual code, tests, dockerize
 
 ## Author and credits
 

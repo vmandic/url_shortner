@@ -1,25 +1,43 @@
+using System.Collections.Concurrent;
+
+using Microsoft.AspNetCore.Http.Json;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
+ConfigureServices(builder);
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+ConfigureHttpPipeline(app);
+app.Run();
+
+static void ConfigureServices(WebApplicationBuilder builder)
+{
+    builder.Services.Configure<JsonOptions>(options =>
+    {
+        // NOTE: lets loosen up deserialization and allow case insensitivity
+        // ref: https://www.meziantou.net/configuring-json-options-in-asp-net-core.htm
+        options.SerializerOptions.PropertyNameCaseInsensitive = true;
+        options.SerializerOptions.PropertyNamingPolicy = null;
+        options.SerializerOptions.WriteIndented = false;
+    });
+
+    builder.Services.AddControllers();
+    builder.Services.AddSwaggerGen();
+}
+
+static void ConfigureHttpPipeline(WebApplication app)
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    app.MapControllers();
 }
 
-app.UseHttpsRedirection();
-
-app.UseAuthorization();
-
-app.MapControllers();
-
-app.Run();
+public partial class Program
+{
+    /// <summary>
+    /// Simulates a datastore ie. Database in a thread-safe manner.
+    /// </summary>
+    public static readonly IDictionary<string, string> ShortLinksMap = new ConcurrentDictionary<string, string>();
+}
