@@ -1,7 +1,7 @@
 ﻿namespace UrlShortner.HttpApi.Helpers
 {
     /// <summary>
-    /// Performs a 32-bit reversed cyclic redundancy checks, ie. prudces a CRC32 hash
+    /// Performs a 32-bit reversed cyclic redundancy checks, ie. produces a CRC32 hash
     /// string of always fixed 8 character length from a given input with its API.
     /// </summary>
     /// <remarks>Ref: https://stackoverflow.com/a/51922169/1534753</remarks>
