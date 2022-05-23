@@ -10,7 +10,7 @@ using UrlShortner.HttpApi.Helpers;
 namespace UrlShortner.HttpApi.Endpoints
 {
     [ApiController]
-    public partial class CreateShortUrl : Controller
+    public class CreateShortUrl : Controller
     {
         public class CreateShortUrlRequest
         {
